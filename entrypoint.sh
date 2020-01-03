@@ -61,8 +61,13 @@ fi
 mkdir /github /github/workspace /github/workspace/.jekyll-cache /github/workspace/_site
 chmod -R 777 /github
 
-echo '[!] - Building static site with link at the top'
-printf "%s\n%s\n%s\n\n" "- name: ${GHUB_BRANCH}" "  url: ${GHUB_BRANCH}" "  byline: 'the tutorial you wrote for testing'" | cat - _data/tutorials.yml > temp && mv temp _data/tutorials.yml
+echo '[!] - Building static site'
+
+# if there is a folder maching the branch name, add a link at the top of the nav
+if [ -d "${GHUB_BRANCH}" ]; then
+    printf "%s\n%s\n%s\n\n" "- name: ${GHUB_BRANCH}" "  url: ${GHUB_BRANCH}" "  byline: 'the tutorial you wrote for testing'" | cat - _data/tutorials.yml > temp && mv temp _data/tutorials.yml
+fi
+
 printf "\nbaseurl: /${GHUB_BRANCH}" >> _config.yml 
 jekyll build
 
