@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "[!] - Entrypoint has started";
+echo "[!] - Entrypoint has started for branch ${GHUB_BRANCH}";
 
 echo "[!] - installing aws cli";
 pip install awscli
@@ -66,12 +66,11 @@ jekyll build
 
 echo '[!] - uploading to s3'
 
-BRANCH=`git rev-parse --abbrev-ref HEAD`
-echo "removing old branch copy first: $BRANCH"
-aws s3 rm --recursive s3://${AWS_S3_BUCKET}/$BRANCH/
+echo "removing old branch copy first: ${GHUB_BRANCH}"
+aws s3 rm --recursive s3://${AWS_S3_BUCKET}/${GHUB_BRANCH}/
 
 echo "uploading build to branch: $BRANCH"
-aws s3 sync --acl public-read /github/workspace/_site s3://${AWS_S3_BUCKET}/$BRANCH/
+aws s3 sync --acl public-read /github/workspace/_site s3://${AWS_S3_BUCKET}/${GHUB_BRANCH}/
 
 echo '[!] - EntryPoint has finished.'
 die
