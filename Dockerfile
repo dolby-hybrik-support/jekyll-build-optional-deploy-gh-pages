@@ -5,6 +5,6 @@ ENV LC_ALL C.UTF-8
 ENV LANG en_US.UTF-8	
 ENV LANGUAGE en_US.UTF-8	
 
-RUN chown -R jekyll /github
+RUN mkdir .jekyll-cache _site
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["sh", "/entrypoint.sh"]
