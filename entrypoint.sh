@@ -3,7 +3,8 @@
 echo "[!] - Entrypoint has started";
 
 echo "[!] - installing aws cli";
-pip install --user awscli
+pip install awscli
+aws s3 help
 
 
 # Should we go up a dir before exiting?
