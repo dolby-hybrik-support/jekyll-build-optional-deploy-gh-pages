@@ -61,7 +61,8 @@ fi
 mkdir /github /github/workspace /github/workspace/.jekyll-cache /github/workspace/_site
 chmod -R 777 /github
 
-echo '[!] - Building '
+echo '[!] - Building static site'
+printf "\nbaseurl: /${GHUB_BRANCH}" >> _config.yml 
 jekyll build
 
 echo '[!] - uploading to s3'
