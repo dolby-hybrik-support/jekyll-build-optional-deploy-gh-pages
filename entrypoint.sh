@@ -2,6 +2,10 @@
 
 echo "[!] - Entrypoint has started";
 
+echo "[!] - installing aws cli";
+pip install --user awscli
+
+
 # Should we go up a dir before exiting?
 die(){
 	if [ -n "$JEKYLL_ROOT" ]; then
@@ -57,6 +61,10 @@ chmod -R 777 /github
 
 echo '[!] - Building '
 jekyll build
+
+echo '[!] - uploading to s3'
+
+aws s3 sync /github/workspace/_site s3://${AWS_S3_BUCKET}/foo/
 
 echo '[!] - EntryPoint has finished.'
 die
