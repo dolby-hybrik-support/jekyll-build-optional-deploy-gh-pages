@@ -1,4 +1,4 @@
-FROM jekyll/jekyll
+FROM jekyll/jekyll:3.8.4
 
 # Set default locale for the environment	
 ENV LC_ALL C.UTF-8	
