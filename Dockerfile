@@ -7,5 +7,7 @@ ENV LANGUAGE en_US.UTF-8
 
 RUN mkdir /github /github/workspace /github/workspace/.jekyll-cache /github/workspace/_site
 RUN chmod -R 777 /github
+WORKDIR /github/workspace
+
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["sh", "/entrypoint.sh"]
