@@ -57,6 +57,7 @@ if [ -n "$DELETE_BEFORE_BUILD" ]; then
 	rm -rf ${DELETE_BEFORE_BUILD};
 fi
 
+
 mkdir /github /github/workspace /github/workspace/.jekyll-cache /github/workspace/_site
 chmod -R 777 /github
 
@@ -65,7 +66,12 @@ jekyll build
 
 echo '[!] - uploading to s3'
 
-aws s3 sync /github/workspace/_site s3://${AWS_S3_BUCKET}/foo/
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+echo "removing old branch copy first: $BRANCH"
+aws s3 rm --recursive s3://${AWS_S3_BUCKET}/$BRANCH/
+
+echo "uploading build to branch: $BRANCH"
+aws s3 sync --acl public-read /github/workspace/_site s3://${AWS_S3_BUCKET}/$BRANCH/
 
 echo '[!] - EntryPoint has finished.'
 die
